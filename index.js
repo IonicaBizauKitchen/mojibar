@@ -3,6 +3,12 @@ var ipc = require('electron').ipcMain
 var globalShortcut = require('global-shortcut')
 var mb = menubar({ dir: __dirname + '/app', width: 440, height: 230, icon: __dirname + '/app/Icon-Template.png', preloadWindow: true, 'window-position': 'topRight' })
 var Menu = require('menu')
+var AutoLaunch = require('auto-launch')
+var appLauncher = new AutoLaunch({name: 'mojibar'})
+
+appLauncher.isEnabled(function (enabled) {
+  if (!enabled) appLauncher.enable()
+})
 
 mb.on('show', function () {
   mb.window.webContents.send('show')
